@@ -1,7 +1,9 @@
-﻿using Application.Core.Quiz.Queries.GetQuizWithQuestions;
+﻿using Application.Core.Quiz.Commands.CreateQuiz;
+using Application.Core.Quiz.Queries.GetQuizWithQuestions;
 using Application.Core.Quiz.Queries.GetQuizzes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared.DTOs.Question;
 
 namespace QuizApi.Presentation.Controllers;
 
@@ -30,6 +32,16 @@ public class QuizController : ControllerBase
     public async Task<IActionResult> GetQuizById(int id, CancellationToken cancellationToken)
     {
         var query = new GetQuizWithQuestionsQuery(id);
+
+        var response = await _sender.Send(query, cancellationToken);
+
+        return Ok(response);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateQuiz([FromBody] QuizCreateDTO quizCreate, CancellationToken cancellationToken)
+    {
+        var query = new CreateQuizCommand(quizCreate);
 
         var response = await _sender.Send(query, cancellationToken);
 

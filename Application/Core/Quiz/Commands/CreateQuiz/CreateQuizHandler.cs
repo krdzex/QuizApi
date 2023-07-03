@@ -14,9 +14,10 @@ internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Uni
 
     public async Task<Unit> Handle(CreateQuizCommand request, CancellationToken cancellationToken)
     {
-        var quiz = new Entities.Models.Quiz
+        var quiz = new Quiz
         {
             Name = request.QuizCreate.Name,
+            QuizQuestions = new List<QuizQuestion>()
         };
 
         foreach (var newQuestion in request.QuizCreate.NewQuestions)
