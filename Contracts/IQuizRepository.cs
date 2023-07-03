@@ -1,8 +1,10 @@
-﻿using Shared.DTOs.Quiz;
+﻿using Entities.Models;
+using Shared.DTOs.Quiz;
 
 namespace Contracts;
 public interface IQuizRepository
 {
     Task<IEnumerable<QuizNameDTO>> GetAllQuizNamesAsync(CancellationToken cancellationToken);
     Task<QuizWithQuestionsDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken);
+    void CreateQuiz(Quiz quiz);
 }

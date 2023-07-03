@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Shared.DTOs.Question;
 using Shared.DTOs.Quiz;
@@ -40,5 +41,10 @@ public class QuizRepository : IQuizRepository
             .FirstOrDefaultAsync(cancellationToken);
 
         return quiz;
+    }
+
+    public void CreateQuiz(Quiz quiz)
+    {
+        _context.Quizzes.Add(quiz);
     }
 }
