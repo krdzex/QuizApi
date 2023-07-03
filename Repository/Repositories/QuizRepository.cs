@@ -55,6 +55,22 @@ public class QuizRepository : IQuizRepository
         return await _context.Quizzes.AnyAsync(q => q.Id == quizId);
     }
 
+    public async Task<bool> RemoveQuestionFromQuiz(int quizId, int questionId, CancellationToken cancellationToken)
+    {
+        var quiz = await _context.Quizzes.Include(q => q.QuizQuestions).SingleOrDefaultAsync(q => q.Id == quizId, cancellationToken);
+
+        var questionToRemove = quiz.QuizQuestions.FirstOrDefault(q => q.QuestionId == questionId);
+
+        if (questionToRemove == null)
+        {
+            return false;
+        }
+
+        quiz.QuizQuestions.Remove(questionToRemove);
+
+        return true;
+    }
+
     public void Create(Quiz quiz)
     {
         _context.Quizzes.Add(quiz);

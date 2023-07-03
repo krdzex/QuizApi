@@ -8,6 +8,7 @@ public interface IQuizRepository
     Task<QuizWithQuestionsDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken);
     Task<Quiz> GetQuizById(int quizId);
     Task<bool> QuizExists(int quizId);
+    Task<bool> RemoveQuestionFromQuiz(int quizId, int questionId, CancellationToken cancellationToken);
     void Create(Quiz quiz);
     void Delete(Quiz quiz);
 }
