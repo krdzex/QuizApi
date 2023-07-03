@@ -3,7 +3,8 @@ using QuizApi.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddPresentation();
+    .AddPresentation()
+    .AddDatabase(builder.Configuration);
 
 var app = builder.Build();
 

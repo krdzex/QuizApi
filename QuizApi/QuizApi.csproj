@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EFCore.NamingConventions" Version="6.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\QuizApi.Presentation\QuizApi.Presentation.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
 </Project>

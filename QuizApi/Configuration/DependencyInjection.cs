@@ -1,4 +1,6 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Repository;
 
 namespace QuizApi.Configuration;
 public static class DependencyInjection
@@ -19,6 +21,16 @@ public static class DependencyInjection
 
         services.AddSwaggerGen();
         services.AddEndpointsApiExplorer();
+
+        return services;
+    }
+
+    public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<RepositoryContext>(opts =>
+        {
+            opts.UseNpgsql(configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention();
+        });
 
         return services;
     }
