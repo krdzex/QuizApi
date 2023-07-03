@@ -28,6 +28,16 @@ internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Uni
             });
         }
 
+        foreach (var existingQuestionId in request.QuizCreate.ExistingQuestionIds)
+        {
+            var existingQuestion = await _repository.Question.GetQuestionById(existingQuestionId);
+
+            if (existingQuestion != null)
+            {
+                quiz.QuizQuestions.Add(new QuizQuestion { QuestionId = existingQuestionId });
+            }
+        }
+
         _repository.Quiz.Create(quiz);
 
         await _repository.SaveAsync(cancellationToken);

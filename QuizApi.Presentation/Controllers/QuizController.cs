@@ -4,7 +4,7 @@ using Application.Core.Quiz.Queries.GetQuizWithQuestions;
 using Application.Core.Quiz.Queries.GetQuizzes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Shared.DTOs.Question;
+using Shared.DTOs.Quiz;
 
 namespace QuizApi.Presentation.Controllers;
 
