@@ -50,9 +50,9 @@ public class QuizRepository : IQuizRepository
         return quiz;
     }
 
-    public async Task<bool> QuizExists(int quizId)
+    public async Task<bool> QuizExists(int quizId, CancellationToken cancellationToken)
     {
-        return await _context.Quizzes.AnyAsync(q => q.Id == quizId);
+        return await _context.Quizzes.AnyAsync(q => q.Id == quizId, cancellationToken);
     }
 
     public async Task<bool> RemoveQuestionFromQuiz(int quizId, int questionId, CancellationToken cancellationToken)

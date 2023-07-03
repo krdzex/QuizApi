@@ -13,8 +13,26 @@ internal sealed class RemoveQuestionFromQuizHandler : IRequestHandler<RemoveQues
 
     public async Task<Unit> Handle(RemoveQuestionFromQuizCommand request, CancellationToken cancellationToken)
     {
+        var quizExist = await _repository.Quiz.QuizExists(request.QuizId, cancellationToken);
 
-        var question = await _repository.Question.GetQuestionById(request.QuestionId);
+        if (!quizExist)
+        {
+
+        }
+
+        var questionExist = await _repository.Question.QuestionExists(request.QuestionId, cancellationToken);
+
+        if (!questionExist)
+        {
+
+        }
+
+        var removeResult = await _repository.Quiz.RemoveQuestionFromQuiz(request.QuizId, request.QuestionId, cancellationToken);
+
+        if (!removeResult)
+        {
+
+        }
 
         await _repository.SaveAsync(cancellationToken);
 

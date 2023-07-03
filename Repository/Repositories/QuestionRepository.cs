@@ -34,8 +34,8 @@ public class QuestionRepository : IQuestionRepository
         return questions;
     }
 
-    public async Task<bool> QuestionExists(int questionId)
+    public async Task<bool> QuestionExists(int questionId, CancellationToken cancellationToken)
     {
-        return await _context.Questions.AnyAsync(q => q.Id == questionId);
+        return await _context.Questions.AnyAsync(q => q.Id == questionId, cancellationToken);
     }
 }
