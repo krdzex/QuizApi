@@ -33,4 +33,9 @@ public class QuestionRepository : IQuestionRepository
 
         return questions;
     }
+
+    public async Task<bool> QuestionExists(int questionId)
+    {
+        return await _context.Questions.AnyAsync(q => q.Id == questionId);
+    }
 }

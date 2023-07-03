@@ -50,6 +50,11 @@ public class QuizRepository : IQuizRepository
         return quiz;
     }
 
+    public async Task<bool> QuizExists(int quizId)
+    {
+        return await _context.Quizzes.AnyAsync(q => q.Id == quizId);
+    }
+
     public void Create(Quiz quiz)
     {
         _context.Quizzes.Add(quiz);
