@@ -34,6 +34,7 @@ public class QuizRepository : IQuizRepository
                 Name = q.Name,
                 Questions = q.QuizQuestions.Select(qq => new QuestionDTO
                 {
+                    Id = qq.QuestionId,
                     Text = qq.Question.Text,
                     Answer = qq.Question.Answer
                 }).ToList()

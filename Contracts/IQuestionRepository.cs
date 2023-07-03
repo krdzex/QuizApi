@@ -5,6 +5,6 @@ namespace Contracts;
 public interface IQuestionRepository
 {
     Task<Question> GetQuestionById(int questionId);
-    Task<IEnumerable<QuestionWithIdDTO>> GetQuestions(string searchTearm, CancellationToken cancellationToken);
+    Task<IEnumerable<QuestionDTO>> GetQuestions(string searchTearm, CancellationToken cancellationToken);
     Task<bool> QuestionExists(int questionId, CancellationToken cancellationToken);
 }

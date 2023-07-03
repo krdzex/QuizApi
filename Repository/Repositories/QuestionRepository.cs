@@ -19,11 +19,11 @@ public class QuestionRepository : IQuestionRepository
         return question;
     }
 
-    public async Task<IEnumerable<QuestionWithIdDTO>> GetQuestions(string searchTearm, CancellationToken cancellationToken)
+    public async Task<IEnumerable<QuestionDTO>> GetQuestions(string searchTearm, CancellationToken cancellationToken)
     {
         var questions = await _context.Questions
             .Where(q => q.Text.Contains(searchTearm))
-            .Select(q => new QuestionWithIdDTO
+            .Select(q => new QuestionDTO
             {
                 Id = q.Id,
                 Text = q.Text,
