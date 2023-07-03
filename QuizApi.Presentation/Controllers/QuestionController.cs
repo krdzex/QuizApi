@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Core.Question.Queries.GetQuestions;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace QuizApi.Presentation.Controllers;
 
@@ -6,14 +8,20 @@ namespace QuizApi.Presentation.Controllers;
 [Route("api/[controller]")]
 public class QuestionController : ControllerBase
 {
+    private readonly ISender _sender;
 
-    public QuestionController()
+    public QuestionController(ISender sender)
     {
+        _sender = sender;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetQuestions([FromQuery] string searchTerm, CancellationToken cancellationToken)
     {
-        return Ok();
+        var query = new GetQuestionsQuery(searchTerm);
+
+        var response = await _sender.Send(query, cancellationToken);
+
+        return Ok(response);
     }
 }

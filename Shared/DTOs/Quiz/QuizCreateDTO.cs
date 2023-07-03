@@ -1,4 +1,6 @@
-﻿namespace Shared.DTOs.Quiz;
+﻿using Shared.DTOs.Question;
+
+namespace Shared.DTOs.Quiz;
 public class QuizCreateDTO
 {
     public string Name { get; set; }

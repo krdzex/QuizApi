@@ -24,7 +24,7 @@ internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Uni
         {
             quiz.QuizQuestions.Add(new QuizQuestion
             {
-                Question = new Question { Text = newQuestion.Text, Answer = newQuestion.Answer }
+                Question = new Entities.Models.Question { Text = newQuestion.Text, Answer = newQuestion.Answer }
             });
         }
 
