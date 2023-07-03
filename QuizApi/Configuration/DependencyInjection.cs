@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Contracts;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Repository;
 
@@ -31,6 +32,13 @@ public static class DependencyInjection
         {
             opts.UseNpgsql(configuration.GetConnectionString("DefaultConnection")).UseSnakeCaseNamingConvention();
         });
+
+        return services;
+    }
+
+    public static IServiceCollection AddManagers(this IServiceCollection services)
+    {
+        services.AddScoped<IRepositoryManager, RepositoryManager>();
 
         return services;
     }
