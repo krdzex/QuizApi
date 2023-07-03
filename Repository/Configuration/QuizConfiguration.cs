@@ -7,7 +7,7 @@ public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
 {
     public void Configure(EntityTypeBuilder<Quiz> builder)
     {
-        builder.HasKey(x => x.Id);
-        builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
+        builder.HasKey(q => q.Id);
+        builder.Property(q => q.Name).IsRequired().HasMaxLength(100);
     }
 }
