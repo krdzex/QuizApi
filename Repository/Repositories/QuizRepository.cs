@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Microsoft.EntityFrameworkCore;
+using Shared.DTOs.Question;
 using Shared.DTOs.Quiz;
 
 namespace Repository.Repositories;
@@ -20,5 +21,24 @@ public class QuizRepository : IQuizRepository
                 Name = q.Name
             })
             .ToListAsync(cancellationToken);
+    }
+
+    public async Task<QuizDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken)
+    {
+        var quiz = await _context.Quizzes
+            .Where(q => q.Id == quizId)
+            .Select(q => new QuizDTO
+            {
+                Id = q.Id,
+                Name = q.Name,
+                Questions = q.QuizQuestions.Select(qq => new QuestionDTO
+                {
+                    Text = qq.Question.Text,
+                    Answer = qq.Question.Answer
+                }).ToList()
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return quiz;
     }
 }

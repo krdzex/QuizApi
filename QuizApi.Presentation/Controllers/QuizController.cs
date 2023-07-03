@@ -16,12 +16,12 @@ public class QuizController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllQuizzes(CancellationToken cancellationToken)
     {
         var query = new GetQuizzesQuery();
 
         var response = await _sender.Send(query, cancellationToken);
 
-        return Ok();
+        return Ok(response);
     }
 }
