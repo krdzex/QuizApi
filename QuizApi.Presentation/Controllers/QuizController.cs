@@ -1,4 +1,5 @@
 ﻿using Application.Core.Quiz.Commands.CreateQuiz;
+using Application.Core.Quiz.Commands.DeleteQuiz;
 using Application.Core.Quiz.Queries.GetQuizWithQuestions;
 using Application.Core.Quiz.Queries.GetQuizzes;
 using MediatR;
@@ -41,10 +42,20 @@ public class QuizController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateQuiz([FromBody] QuizCreateDTO quizCreate, CancellationToken cancellationToken)
     {
-        var query = new CreateQuizCommand(quizCreate);
+        var command = new CreateQuizCommand(quizCreate);
 
-        var response = await _sender.Send(query, cancellationToken);
+        var response = await _sender.Send(command, cancellationToken);
 
-        return Ok(response);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteQuiz(int id, CancellationToken cancellationToken)
+    {
+        var command = new DeleteQuizCommand(id);
+
+        var response = await _sender.Send(command, cancellationToken);
+
+        return NoContent();
     }
 }
