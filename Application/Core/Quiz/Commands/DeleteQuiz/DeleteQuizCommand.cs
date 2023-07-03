@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
-namespace Application.Core.Quiz.Commands.DeleteQuiz
-{
-    internal class DeleteQuizCommand
-    {
-    }
-}
+namespace Application.Core.Quiz.Commands.DeleteQuiz;
+public sealed record DeleteQuizCommand(int QuizId) : IRequest<Unit>;

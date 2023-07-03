@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Contracts;
+using MediatR;
 
-namespace Application.Core.Quiz.Commands.DeleteQuiz
+namespace Application.Core.Quiz.Commands.DeleteQuiz;
+internal sealed class DeleteQuizHandler : IRequestHandler<DeleteQuizCommand, Unit>
 {
-    internal class DeleteQuizHandler
+    private readonly IRepositoryManager _repository;
+
+    public DeleteQuizHandler(IRepositoryManager repository)
     {
+        _repository = repository;
+    }
+
+    public async Task<Unit> Handle(DeleteQuizCommand request, CancellationToken cancellationToken)
+    {
+        var quiz = await _repository.Quiz.GetQuizById(request.QuizId);
+
+        if (quiz is null)
+        {
+
+        }
+
+        _repository.Quiz.Delete(quiz);
+
+        await _repository.SaveAsync(cancellationToken);
+
+        return Unit.Value;
     }
 }

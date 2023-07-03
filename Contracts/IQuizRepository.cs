@@ -6,5 +6,7 @@ public interface IQuizRepository
 {
     Task<IEnumerable<QuizNameDTO>> GetAllQuizNamesAsync(CancellationToken cancellationToken);
     Task<QuizWithQuestionsDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken);
-    void CreateQuiz(Quiz quiz);
+    Task<Quiz> GetQuizById(int quizId);
+    void Create(Quiz quiz);
+    void Delete(Quiz quiz);
 }

@@ -43,8 +43,20 @@ public class QuizRepository : IQuizRepository
         return quiz;
     }
 
-    public void CreateQuiz(Quiz quiz)
+    public async Task<Quiz> GetQuizById(int quizId)
+    {
+        var quiz = await _context.Quizzes.FindAsync(quizId);
+
+        return quiz;
+    }
+
+    public void Create(Quiz quiz)
     {
         _context.Quizzes.Add(quiz);
+    }
+
+    public void Delete(Quiz quiz)
+    {
+        _context.Quizzes.Remove(quiz);
     }
 }
