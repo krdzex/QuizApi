@@ -1,4 +1,5 @@
-﻿using Application.Core.Quiz.Queries.GetQuizzes;
+﻿using Application.Core.Quiz.Queries.GetQuizWithQuestions;
+using Application.Core.Quiz.Queries.GetQuizzes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,16 @@ public class QuizController : ControllerBase
     public async Task<IActionResult> GetAllQuizzes(CancellationToken cancellationToken)
     {
         var query = new GetQuizzesQuery();
+
+        var response = await _sender.Send(query, cancellationToken);
+
+        return Ok(response);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetQuizById(int id, CancellationToken cancellationToken)
+    {
+        var query = new GetQuizWithQuestionsQuery(id);
 
         var response = await _sender.Send(query, cancellationToken);
 

@@ -23,11 +23,11 @@ public class QuizRepository : IQuizRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<QuizDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken)
+    public async Task<QuizWithQuestionsDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken)
     {
         var quiz = await _context.Quizzes
             .Where(q => q.Id == quizId)
-            .Select(q => new QuizDTO
+            .Select(q => new QuizWithQuestionsDTO
             {
                 Id = q.Id,
                 Name = q.Name,

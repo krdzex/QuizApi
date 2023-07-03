@@ -1,7 +1,7 @@
 ﻿using Shared.DTOs.Question;
 
 namespace Shared.DTOs.Quiz;
-public class QuizDTO
+public class QuizWithQuestionsDTO
 {
     public int Id { get; set; }
 
