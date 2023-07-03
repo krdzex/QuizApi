@@ -3,8 +3,9 @@
 namespace Repository.Repositories;
 public class QuestionRepository : IQuestionRepository
 {
-    public QuestionRepository()
+    private readonly RepositoryContext _context;
+    public QuestionRepository(RepositoryContext repositoryContext)
     {
-
+        _context = repositoryContext;
     }
 }

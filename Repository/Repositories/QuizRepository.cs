@@ -3,8 +3,9 @@
 namespace Repository.Repositories;
 public class QuizRepository : IQuizRepository
 {
-    public QuizRepository()
+    private readonly RepositoryContext _context;
+    public QuizRepository(RepositoryContext repositoryContext)
     {
-
+        _context = repositoryContext;
     }
 }
