@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Result;
+using System.Text.RegularExpressions;
 
 namespace QuizApi.Presentation.Infrastructure;
 
@@ -38,7 +39,7 @@ public abstract class ApiController : ControllerBase
         var problemDetails = new ProblemDetails
         {
             Type = $"https://httpstatuses.com/{(int)result.StatusCode}",
-            Title = "",
+            Title = SplitCamelCaseTitle(result.StatusCode.ToString()),
             Status = (int)result.StatusCode,
             Detail = result.ErrorMessage?.Message,
         };
@@ -49,5 +50,11 @@ public abstract class ApiController : ControllerBase
         }
 
         return StatusCode((int)result.StatusCode, problemDetails);
+    }
+
+    private static string SplitCamelCaseTitle(string title)
+    {
+        var regex = new Regex("(?<=[a-z])([A-Z])", RegexOptions.Compiled);
+        return regex.Replace(title, " $1");
     }
 }
