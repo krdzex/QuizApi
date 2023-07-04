@@ -29,9 +29,9 @@ public class QuizController : ApiController
     {
         var query = new GetQuizzesQuery();
 
-        var response = await Sender.Send(query, cancellationToken);
+        var result = await Sender.Send(query, cancellationToken);
 
-        return Ok(response);
+        return result.IsSuccess ? Ok(result.Value) : HandleFailure(result);
     }
 
     [HttpGet("{id}")]
@@ -39,9 +39,9 @@ public class QuizController : ApiController
     {
         var query = new GetQuizWithQuestionsQuery(id);
 
-        var response = await Sender.Send(query, cancellationToken);
+        var result = await Sender.Send(query, cancellationToken);
 
-        return response.IsSuccess ? Ok(response.Value) : HandleFailure(response);
+        return result.IsSuccess ? Ok(result.Value) : HandleFailure(result);
     }
 
     [HttpPost]
@@ -49,9 +49,9 @@ public class QuizController : ApiController
     {
         var command = new CreateQuizCommand(quizCreate);
 
-        var response = await Sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
 
-        return NoContent();
+        return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
 
     [HttpDelete("{id}")]
@@ -59,9 +59,9 @@ public class QuizController : ApiController
     {
         var command = new DeleteQuizCommand(id);
 
-        var response = await Sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
 
-        return NoContent();
+        return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
 
     [HttpPut("{id}/name")]
@@ -69,9 +69,9 @@ public class QuizController : ApiController
     {
         var command = new UpdateQuizNameCommand(id, quizNameUpdate);
 
-        var response = await Sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
 
-        return NoContent();
+        return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
 
     [HttpDelete("{quizId}/question/{questionId}")]
@@ -80,13 +80,13 @@ public class QuizController : ApiController
     {
         var command = new RemoveQuestionFromQuizCommand(quizId, questionId);
 
-        var response = await Sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
 
-        return NoContent();
+        return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
 
     [HttpGet("exporter")]
-    public async Task<IActionResult> GetAllExporters()
+    public IActionResult GetAllExporters()
     {
         var exporters = _exporterProvider.GetExporters();
 
@@ -98,8 +98,12 @@ public class QuizController : ApiController
     {
         var query = new GetQuizForExportQuery(quizId);
 
-        var response = await Sender.Send(query, cancellationToken);
+        var result = await Sender.Send(query, cancellationToken);
 
+        if (!result.IsSuccess)
+        {
+            return HandleFailure(result);
+        }
         var exporter = _exporterProvider.GetExporter(exportFormat);
 
         if (exporter == null)
@@ -107,7 +111,7 @@ public class QuizController : ApiController
             return BadRequest("Invalid export format");
         }
 
-        var exportedData = exporter.ExportAsync(response);
+        var exportedData = exporter.ExportAsync(result.Value);
 
         return File(Encoding.UTF8.GetBytes(exportedData), "text/csv", $"{quizId}.csv");
     }

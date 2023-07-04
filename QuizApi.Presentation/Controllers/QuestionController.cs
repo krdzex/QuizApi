@@ -10,7 +10,6 @@ namespace QuizApi.Presentation.Controllers;
 [Route("api/[controller]")]
 public class QuestionController : ApiController
 {
-
     public QuestionController(ISender sender)
         : base(sender)
     {
@@ -21,9 +20,9 @@ public class QuestionController : ApiController
     {
         var query = new GetQuestionsQuery(searchTerm);
 
-        var response = await Sender.Send(query, cancellationToken);
+        var result = await Sender.Send(query, cancellationToken);
 
-        return Ok(response);
+        return result.IsSuccess ? Ok(result.Value) : HandleFailure(result);
     }
 
     [HttpPut("{id}")]
@@ -31,8 +30,8 @@ public class QuestionController : ApiController
     {
         var command = new UpdateQuestionCommand(id, questionUpdate);
 
-        var response = await Sender.Send(command, cancellationToken);
+        var result = await Sender.Send(command, cancellationToken);
 
-        return NoContent();
+        return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
 }
