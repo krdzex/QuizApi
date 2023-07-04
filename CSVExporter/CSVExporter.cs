@@ -3,15 +3,14 @@ using System.ComponentModel.Composition;
 
 namespace CSVExporter
 {
-    [Export(typeof(IExportService))]
-    public class DocFormatReader : IExportService
+    [Export(typeof(IExporter))]
+    public class CSVExporter : IExporter
     {
-        public string Format => ".csv";
+        public string Format => "csv";
 
-        public string Export(string path)
+        public string ExportAsync(string data)
         {
-            //var dc = DocumentCore.Load(path);
-            //var runList = dc.GetChildElements(true, ElementType.Run).Select(x => x.Content.ToString());
+
             return "";
         }
     }
