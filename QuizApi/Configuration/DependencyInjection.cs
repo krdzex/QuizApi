@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using LoggerService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -40,6 +41,7 @@ public static class DependencyInjection
     public static IServiceCollection AddManagers(this IServiceCollection services)
     {
         services.AddScoped<IRepositoryManager, RepositoryManager>();
+        services.AddSingleton<ILoggerManager, LoggerManager>();
 
         return services;
     }

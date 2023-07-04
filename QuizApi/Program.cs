@@ -1,6 +1,9 @@
+using NLog;
 using QuizApi.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 builder.Services
     .AddApplication()
