@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters&quot; /Y /I" />
+    <Exec Command="if not exist &quot;$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters&quot; mkdir &quot;$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters&quot;&#xD;&#xA;xcopy /y &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters\&quot;" />
   </Target>
 
 </Project>
