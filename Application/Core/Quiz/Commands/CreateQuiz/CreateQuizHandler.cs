@@ -1,9 +1,10 @@
 ﻿using Contracts;
 using Entities.Models;
 using MediatR;
+using Shared.Result;
 
 namespace Application.Core.Quiz.Commands.CreateQuiz;
-internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Unit>
+internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Result>
 {
     private readonly IRepositoryManager _repository;
 
@@ -12,7 +13,7 @@ internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Uni
         _repository = repository;
     }
 
-    public async Task<Unit> Handle(CreateQuizCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateQuizCommand request, CancellationToken cancellationToken)
     {
         var quiz = new Entities.Models.Quiz
         {
@@ -32,14 +33,16 @@ internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Uni
         {
             var existingQuestion = await _repository.Question.GetQuestionById(existingQuestionId);
 
-            if (existingQuestion != null)
+            if (existingQuestion is null)
             {
-                quiz.QuizQuestions.Add(new QuizQuestion { QuestionId = existingQuestionId });
+                return Result.NotFound($"Question with id '{existingQuestionId}' not found.");
             }
+
+            quiz.QuizQuestions.Add(new QuizQuestion { QuestionId = existingQuestionId });
         }
 
         _repository.Quiz.Create(quiz);
 
-        return Unit.Value;
+        return Result.Success();
     }
 }
