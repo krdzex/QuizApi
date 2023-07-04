@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using Application.Behaviors;
+using Contracts;
 using LoggerService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,7 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddMediatR(typeof(Application.AssemblyReference).Assembly);
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
         return services;
     }
