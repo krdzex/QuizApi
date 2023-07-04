@@ -25,7 +25,7 @@ internal sealed class RemoveQuestionFromQuizHandler : IRequestHandler<RemoveQues
 
         if (!questionExist)
         {
-            return Result.NotFound($"Question with id '{request.QuizId}' not found.");
+            return Result.NotFound($"Question with id '{request.QuestionId}' not found.");
         }
 
         var removeResult = await _repository.Quiz.RemoveQuestionFromQuiz(request.QuizId, request.QuestionId, cancellationToken);

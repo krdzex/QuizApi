@@ -1,8 +1,9 @@
 ﻿using Contracts;
 using MediatR;
+using Shared.Result;
 
 namespace Application.Core.Question.Commands.UpdateQuestion;
-internal sealed class UpdateQuestionHandler : IRequestHandler<UpdateQuestionCommand, Unit>
+internal sealed class UpdateQuestionHandler : IRequestHandler<UpdateQuestionCommand, Result>
 {
     private readonly IRepositoryManager _repository;
 
@@ -11,18 +12,18 @@ internal sealed class UpdateQuestionHandler : IRequestHandler<UpdateQuestionComm
         _repository = repository;
     }
 
-    public async Task<Unit> Handle(UpdateQuestionCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateQuestionCommand request, CancellationToken cancellationToken)
     {
         var question = await _repository.Question.GetQuestionById(request.QuestionId);
 
         if (question is null)
         {
-
+            return Result.NotFound($"Question with id '{request.QuestionId}' not found.");
         }
 
         question.Text = request.QuestionUpdate.Text;
         question.Answer = request.QuestionUpdate.Answer;
 
-        return Unit.Value;
+        return Result.Success();
     }
 }
