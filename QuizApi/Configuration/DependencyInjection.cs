@@ -51,6 +51,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(typeof(Application.AssemblyReference).Assembly);
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DbSaveBehavior<,>));
 
         return services;
     }
