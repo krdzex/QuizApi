@@ -2,19 +2,18 @@
 using Application.Core.Question.Queries.GetQuestions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using QuizApi.Presentation.Infrastructure;
 using Shared.DTOs.Question;
 
 namespace QuizApi.Presentation.Controllers;
 
-[ApiController]
 [Route("api/[controller]")]
-public class QuestionController : ControllerBase
+public class QuestionController : ApiController
 {
-    private readonly ISender _sender;
 
     public QuestionController(ISender sender)
+        : base(sender)
     {
-        _sender = sender;
     }
 
     [HttpGet]
@@ -22,7 +21,7 @@ public class QuestionController : ControllerBase
     {
         var query = new GetQuestionsQuery(searchTerm);
 
-        var response = await _sender.Send(query, cancellationToken);
+        var response = await Sender.Send(query, cancellationToken);
 
         return Ok(response);
     }
@@ -32,7 +31,7 @@ public class QuestionController : ControllerBase
     {
         var command = new UpdateQuestionCommand(id, questionUpdate);
 
-        var response = await _sender.Send(command, cancellationToken);
+        var response = await Sender.Send(command, cancellationToken);
 
         return NoContent();
     }
