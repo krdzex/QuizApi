@@ -2,11 +2,13 @@
 using Application.Core.Quiz.Commands.DeleteQuiz;
 using Application.Core.Quiz.Commands.RemoveQuestionFromQuiz;
 using Application.Core.Quiz.Commands.UpdateQuizName;
+using Application.Core.Quiz.Queries.GetQuizForExport;
 using Application.Core.Quiz.Queries.GetQuizWithQuestions;
 using Application.Core.Quiz.Queries.GetQuizzes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared.DTOs.Quiz;
+using System.Text;
 
 namespace QuizApi.Presentation.Controllers;
 
@@ -84,11 +86,30 @@ public class QuizController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("/exporter")]
+    [HttpGet("exporter")]
     public async Task<IActionResult> GetAllExporters()
     {
         var exporters = _exporterProvider.GetExporters();
 
         return Ok(exporters);
+    }
+
+    [HttpGet("{quizId}/exporter/{exportFormat}")]
+    public async Task<IActionResult> ExportQuiz(int quizId, string exportFormat, CancellationToken cancellationToken)
+    {
+        var query = new GetQuizForExportQuery(quizId);
+
+        var response = await _sender.Send(query, cancellationToken);
+
+        var exporter = _exporterProvider.GetExporter(exportFormat);
+
+        if (exporter == null)
+        {
+            return BadRequest("Invalid export format");
+        }
+
+        var exportedData = exporter.ExportAsync(response);
+
+        return File(Encoding.UTF8.GetBytes(exportedData), "text/csv", $"{quizId}.csv");
     }
 }

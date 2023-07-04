@@ -72,6 +72,23 @@ public class QuizRepository : IQuizRepository
         return true;
     }
 
+    public async Task<QuizWithQuestionTextDTO> GetQuizForExport(int quizId, CancellationToken cancellationToken)
+    {
+        var quizForExport = await _context.Quizzes
+            .Where(q => q.Id == quizId)
+            .Select(q => new QuizWithQuestionTextDTO
+            {
+                Name = q.Name,
+                Questions = q.QuizQuestions.Select(qq => new QuestionTextDTO
+                {
+                    Text = qq.Question.Text,
+                }).ToList()
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        return quizForExport;
+    }
+
     public void Create(Quiz quiz)
     {
         _context.Quizzes.Add(quiz);

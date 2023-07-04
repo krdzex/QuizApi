@@ -1,6 +1,8 @@
-﻿namespace Contracts;
+﻿using Shared.DTOs.Quiz;
+
+namespace Contracts;
 public interface IExporter
 {
     string Format { get; }
-    string ExportAsync(string test);
+    string ExportAsync(QuizWithQuestionTextDTO quiz);
 }

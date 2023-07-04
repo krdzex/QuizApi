@@ -1,17 +1,31 @@
 ﻿using Contracts;
+using CsvHelper;
+using Shared.DTOs.Quiz;
 using System.ComponentModel.Composition;
+using System.Globalization;
 
-namespace CSVExporter
+namespace CSVExporter;
+
+[Export(typeof(IExporter))]
+public class CSVExporter : IExporter
 {
-    [Export(typeof(IExporter))]
-    public class CSVExporter : IExporter
+    public string Format => "csv";
+
+    public string ExportAsync(QuizWithQuestionTextDTO quiz)
     {
-        public string Format => "csv";
-
-        public string ExportAsync(string data)
+        using (var writer = new StringWriter())
+        using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
         {
+            csv.WriteField(quiz.Name);
+            csv.NextRecord();
 
-            return "";
+            foreach (var question in quiz.Questions)
+            {
+                csv.WriteField(question.Text);
+                csv.NextRecord();
+            }
+
+            return writer.ToString();
         }
     }
 }
