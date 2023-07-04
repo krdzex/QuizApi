@@ -1,5 +1,6 @@
 ﻿using Application.Behaviors;
 using Contracts;
+using FluentValidation;
 using LoggerService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,10 @@ public static class DependencyInjection
         services.AddMediatR(typeof(Application.AssemblyReference).Assembly);
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DbSaveBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+        services.AddValidatorsFromAssembly(
+            typeof(Application.AssemblyReference).Assembly,
+            includeInternalTypes: true);
 
         return services;
     }
