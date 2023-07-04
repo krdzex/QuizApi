@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contracts;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
 
 namespace QuizApi.Middleware;
 public sealed class GlobalExceptionHandlerMiddleware : IMiddleware
 {
-    private readonly ILogger _logger;
+    private readonly ILoggerManager _logger;
 
-    public GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMiddleware> logger)
+    public GlobalExceptionHandlerMiddleware(ILoggerManager logger)
     {
         _logger = logger;
     }
@@ -20,7 +21,7 @@ public sealed class GlobalExceptionHandlerMiddleware : IMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while processing the request");
+            _logger.LogError(ex.Message);
 
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/problem+json";
