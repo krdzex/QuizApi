@@ -1,11 +1,12 @@
 ﻿using Contracts;
 using MediatR;
+using Shared.Result;
 using System.Transactions;
 
 namespace Application.Behaviors;
 
 public sealed class DbSaveBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : IRequest<TResponse> where TResponse : ResultBase
 {
     private readonly IRepositoryManager _repository;
 
@@ -26,6 +27,11 @@ public sealed class DbSaveBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
         using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
         {
             var response = await next();
+
+            if (response is ResultBase { IsSuccess: false })
+            {
+                return response;
+            }
 
             await _repository.SaveAsync(cancellationToken);
 
