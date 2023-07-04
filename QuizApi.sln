@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizApi.Presentation", "Qui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{F2D99CD7-1D90-4AB3-B0F6-FF2EFF4629C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{02D0EDAE-13F9-4056-B752-03FD94C4DCAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{F2D99CD7-1D90-4AB3-B0F6-FF2EFF4629C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2D99CD7-1D90-4AB3-B0F6-FF2EFF4629C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2D99CD7-1D90-4AB3-B0F6-FF2EFF4629C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02D0EDAE-13F9-4056-B752-03FD94C4DCAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02D0EDAE-13F9-4056-B752-03FD94C4DCAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02D0EDAE-13F9-4056-B752-03FD94C4DCAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02D0EDAE-13F9-4056-B752-03FD94C4DCAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
