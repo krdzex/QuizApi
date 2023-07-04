@@ -2,7 +2,7 @@
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 
-namespace QuizApi.Configuration;
+namespace QuizApi.Presentation;
 public class ExporterProvider
 {
     [ImportMany]
@@ -19,5 +19,10 @@ public class ExporterProvider
     public IExporter GetExporter(string format)
     {
         return Exporters.FirstOrDefault(e => e.Format == format);
+    }
+
+    public IEnumerable<string> GetExporters()
+    {
+        return Exporters.Select(e => e.Format);
     }
 }

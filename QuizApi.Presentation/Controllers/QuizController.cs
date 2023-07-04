@@ -15,10 +15,12 @@ namespace QuizApi.Presentation.Controllers;
 public class QuizController : ControllerBase
 {
     private readonly ISender _sender;
+    private readonly ExporterProvider _exporterProvider;
 
     public QuizController(ISender sender)
     {
         _sender = sender;
+        _exporterProvider = new ExporterProvider();
     }
 
     [HttpGet]
@@ -80,5 +82,13 @@ public class QuizController : ControllerBase
         var response = await _sender.Send(command, cancellationToken);
 
         return NoContent();
+    }
+
+    [HttpGet("/exporter")]
+    public async Task<IActionResult> GetAllExporters()
+    {
+        var exporters = _exporterProvider.GetExporters();
+
+        return Ok(exporters);
     }
 }
