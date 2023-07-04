@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy &quot;$(TargetDir)\CSVExporter.dll&quot; &quot;$(SolutionDir)QuizApi\bin\Debug\net6.0&quot; /Y /I" />
+    <Exec Command="xcopy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters&quot; /Y /I" />
   </Target>
 
 </Project>

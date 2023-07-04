@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir &quot;$(ProjectDir)bin\$(Configuration)\$(TargetFramework)\exporters&quot; || true" />
+  </Target>
+
 </Project>
