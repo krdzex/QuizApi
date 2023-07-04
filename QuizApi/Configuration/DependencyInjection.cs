@@ -4,6 +4,7 @@ using LoggerService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using QuizApi.Middleware;
 using Repository;
 
 namespace QuizApi.Configuration;
@@ -52,6 +53,13 @@ public static class DependencyInjection
         services.AddMediatR(typeof(Application.AssemblyReference).Assembly);
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DbSaveBehavior<,>));
+
+        return services;
+    }
+
+    public static IServiceCollection AddMiddlewares(this IServiceCollection services)
+    {
+        services.AddTransient<GlobalExceptionHandlerMiddleware>();
 
         return services;
     }
