@@ -40,8 +40,6 @@ internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Uni
 
         _repository.Quiz.Create(quiz);
 
-        await _repository.SaveAsync(cancellationToken);
-
         return Unit.Value;
     }
 }

@@ -22,8 +22,6 @@ internal sealed class DeleteQuizHandler : IRequestHandler<DeleteQuizCommand, Uni
 
         _repository.Quiz.Delete(quiz);
 
-        await _repository.SaveAsync(cancellationToken);
-
         return Unit.Value;
     }
 }

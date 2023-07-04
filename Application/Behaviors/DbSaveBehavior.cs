@@ -23,7 +23,7 @@ public sealed class DbSaveBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
             return await next();
         }
 
-        using (var transactionScope = new TransactionScope())
+        using (var transactionScope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
         {
             var response = await next();
 

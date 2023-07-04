@@ -23,8 +23,6 @@ internal sealed class UpdateQuestionHandler : IRequestHandler<UpdateQuestionComm
         question.Text = request.QuestionUpdate.Text;
         question.Answer = request.QuestionUpdate.Answer;
 
-        await _repository.SaveAsync(cancellationToken);
-
         return Unit.Value;
     }
 }

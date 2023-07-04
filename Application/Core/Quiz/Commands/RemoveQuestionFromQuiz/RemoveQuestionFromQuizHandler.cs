@@ -34,8 +34,6 @@ internal sealed class RemoveQuestionFromQuizHandler : IRequestHandler<RemoveQues
 
         }
 
-        await _repository.SaveAsync(cancellationToken);
-
         return Unit.Value;
     }
 }

@@ -22,8 +22,6 @@ internal sealed class UpdateQuizNameHandler : IRequestHandler<UpdateQuizNameComm
 
         quiz.Name = request.QuizNameUpdate.Name;
 
-        await _repository.SaveAsync(cancellationToken);
-
         return Unit.Value;
     }
 }
