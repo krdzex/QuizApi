@@ -1,9 +1,9 @@
-﻿using Contracts;
-using MediatR;
+﻿using Application.Abstraction.Messaging;
+using Contracts;
 using Shared.Result;
 
 namespace Application.Core.Quiz.Commands.UpdateQuizName;
-internal sealed class UpdateQuizNameHandler : IRequestHandler<UpdateQuizNameCommand, Result>
+internal sealed class UpdateQuizNameHandler : ICommandHandler<UpdateQuizNameCommand>
 {
     private readonly IRepositoryManager _repository;
 

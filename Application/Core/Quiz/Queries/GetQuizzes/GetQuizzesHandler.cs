@@ -1,10 +1,10 @@
-﻿using Contracts;
-using MediatR;
+﻿using Application.Abstraction.Messaging;
+using Contracts;
 using Shared.DTOs.Quiz;
 using Shared.Result;
 
 namespace Application.Core.Quiz.Queries.GetQuizzes;
-internal sealed class GetQuizzesHandler : IRequestHandler<GetQuizzesQuery, Result<List<QuizNameDTO>>>
+internal sealed class GetQuizzesHandler : IQueryHandler<GetQuizzesQuery, List<QuizNameDTO>>
 {
     private readonly IRepositoryManager _repository;
 

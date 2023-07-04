@@ -1,10 +1,10 @@
-﻿using Contracts;
+﻿using Application.Abstraction.Messaging;
+using Contracts;
 using Entities.Models;
-using MediatR;
 using Shared.Result;
 
 namespace Application.Core.Quiz.Commands.CreateQuiz;
-internal sealed class CreateQuizHandler : IRequestHandler<CreateQuizCommand, Result>
+internal sealed class CreateQuizHandler : ICommandHandler<CreateQuizCommand>
 {
     private readonly IRepositoryManager _repository;
 

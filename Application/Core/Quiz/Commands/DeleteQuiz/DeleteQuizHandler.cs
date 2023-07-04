@@ -1,9 +1,9 @@
-﻿using Contracts;
-using MediatR;
+﻿using Application.Abstraction.Messaging;
+using Contracts;
 using Shared.Result;
 
 namespace Application.Core.Quiz.Commands.DeleteQuiz;
-internal sealed class DeleteQuizHandler : IRequestHandler<DeleteQuizCommand, Result>
+internal sealed class DeleteQuizHandler : ICommandHandler<DeleteQuizCommand>
 {
     private readonly IRepositoryManager _repository;
 

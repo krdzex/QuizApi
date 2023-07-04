@@ -1,9 +1,9 @@
-﻿using Contracts;
-using MediatR;
+﻿using Application.Abstraction.Messaging;
+using Contracts;
 using Shared.Result;
 
 namespace Application.Core.Quiz.Commands.RemoveQuestionFromQuiz;
-internal sealed class RemoveQuestionFromQuizHandler : IRequestHandler<RemoveQuestionFromQuizCommand, Result>
+internal sealed class RemoveQuestionFromQuizHandler : ICommandHandler<RemoveQuestionFromQuizCommand>
 {
     private readonly IRepositoryManager _repository;
 

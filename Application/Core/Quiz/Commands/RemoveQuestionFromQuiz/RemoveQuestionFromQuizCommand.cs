@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Shared.Result;
+﻿using Application.Abstraction.Messaging;
 
 namespace Application.Core.Quiz.Commands.RemoveQuestionFromQuiz;
-public sealed record RemoveQuestionFromQuizCommand(int QuizId, int QuestionId) : IRequest<Result>;
+public sealed record RemoveQuestionFromQuizCommand(int QuizId, int QuestionId) : ICommand;

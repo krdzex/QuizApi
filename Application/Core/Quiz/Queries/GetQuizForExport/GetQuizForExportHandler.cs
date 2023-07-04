@@ -1,10 +1,10 @@
-﻿using Contracts;
-using MediatR;
+﻿using Application.Abstraction.Messaging;
+using Contracts;
 using Shared.DTOs.Quiz;
 using Shared.Result;
 
 namespace Application.Core.Quiz.Queries.GetQuizForExport;
-internal sealed class GetQuizForExportHandler : IRequestHandler<GetQuizForExportQuery, Result<QuizWithQuestionTextDTO>>
+internal sealed class GetQuizForExportHandler : IQueryHandler<GetQuizForExportQuery, QuizWithQuestionTextDTO>
 {
     private readonly IRepositoryManager _repository;
 

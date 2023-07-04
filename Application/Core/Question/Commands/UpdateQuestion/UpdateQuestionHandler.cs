@@ -1,9 +1,9 @@
-﻿using Contracts;
-using MediatR;
+﻿using Application.Abstraction.Messaging;
+using Contracts;
 using Shared.Result;
 
 namespace Application.Core.Question.Commands.UpdateQuestion;
-internal sealed class UpdateQuestionHandler : IRequestHandler<UpdateQuestionCommand, Result>
+internal sealed class UpdateQuestionHandler : ICommandHandler<UpdateQuestionCommand>
 {
     private readonly IRepositoryManager _repository;
 
