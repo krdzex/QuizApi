@@ -22,15 +22,14 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
             return await next();
         }
 
-        var context = new ValidationContext<TRequest>(request);
 
-        var validationResults =
-            await Task.WhenAll(_validators.Select(v => v.ValidateAsync(context, cancellationToken)));
-
-        var errorDetails = validationResults
-            .SelectMany(result => result.Errors)
-            .Where(failure => failure != null)
-            .Select(failure => new ErrorDetail(failure.PropertyName.Split('.').First(), failure.ErrorMessage))
+        var errorDetails = _validators
+            .Select(validator => validator.Validate(request))
+            .SelectMany(validationResult => validationResult.Errors)
+            .Where(validationFailure => validationFailure is not null)
+            .Select(failure => new ErrorDetail(
+                failure.PropertyName,
+                failure.ErrorMessage))
             .Distinct()
             .ToArray();
 

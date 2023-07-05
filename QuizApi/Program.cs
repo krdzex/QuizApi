@@ -1,5 +1,6 @@
 using NLog;
 using QuizApi.Configuration;
+using QuizApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,8 @@ builder.Services
     .AddApplication()
     .AddPresentation()
     .AddDatabase(builder.Configuration)
-    .AddManagers();
-//.AddMiddlewares();
+    .AddManagers()
+    .AddMiddlewares();
 
 var app = builder.Build();
 
@@ -20,7 +21,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 
