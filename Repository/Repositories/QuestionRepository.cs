@@ -1,7 +1,9 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Extensions;
 using Shared.DTOs.Question;
+using Shared.RequestFeatures;
 
 namespace Repository.Repositories;
 public class QuestionRepository : IQuestionRepository
@@ -19,17 +21,22 @@ public class QuestionRepository : IQuestionRepository
         return question;
     }
 
-    public async Task<IEnumerable<QuestionDTO>> GetQuestions(string searchTearm, CancellationToken cancellationToken)
+    public async Task<PagedList<QuestionDTO>> GetQuestions(QuestionParameters questionParameters, CancellationToken cancellationToken)
     {
-        var questions = await _context.Questions
-            .Where(q => q.Text.Contains(searchTearm))
+        IQueryable<Question> questionsQuery = _context
+            .Questions
+            .Search(questionParameters.SearchTerm)
+            .Sort(questionParameters.OrderBy);
+
+        var questionResponseQuery = questionsQuery
             .Select(q => new QuestionDTO
             {
                 Id = q.Id,
                 Text = q.Text,
                 Answer = q.Answer,
-            })
-            .ToListAsync(cancellationToken);
+            });
+
+        var questions = await PagedList<QuestionDTO>.CreateAsync(questionResponseQuery, questionParameters.PageNumber, questionParameters.PageSize);
 
         return questions;
     }
