@@ -1,10 +1,11 @@
 ﻿using Entities.Models;
 using Shared.DTOs.Quiz;
+using Shared.RequestFeatures;
 
 namespace Contracts;
 public interface IQuizRepository
 {
-    Task<IEnumerable<QuizNameDTO>> GetAllQuizNamesAsync(CancellationToken cancellationToken);
+    Task<PagedList<QuizNameDTO>> GetAllQuizNamesAsync(QuizParameters quizParameters, CancellationToken cancellationToken);
     Task<QuizWithQuestionsDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken);
     Task<Quiz> GetQuizById(int quizId);
     Task<bool> QuizExists(int quizId, CancellationToken cancellation);

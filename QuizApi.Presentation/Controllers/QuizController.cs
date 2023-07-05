@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using QuizApi.Presentation.Infrastructure;
 using Shared.DTOs.Quiz;
+using Shared.RequestFeatures;
 using System.Text;
 
 namespace QuizApi.Presentation.Controllers;
@@ -25,9 +26,9 @@ public class QuizController : ApiController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllQuizzes(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllQuizzes([FromQuery] QuizParameters quizParameters, CancellationToken cancellationToken)
     {
-        var query = new GetQuizzesQuery();
+        var query = new GetQuizzesQuery(quizParameters);
 
         var result = await Sender.Send(query, cancellationToken);
 

@@ -1,8 +1,10 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Repository.Extensions;
 using Shared.DTOs.Question;
 using Shared.DTOs.Quiz;
+using Shared.RequestFeatures;
 
 namespace Repository.Repositories;
 public class QuizRepository : IQuizRepository
@@ -13,15 +15,23 @@ public class QuizRepository : IQuizRepository
         _context = repositoryContext;
     }
 
-    public async Task<IEnumerable<QuizNameDTO>> GetAllQuizNamesAsync(CancellationToken cancellationToken)
+    public async Task<PagedList<QuizNameDTO>> GetAllQuizNamesAsync(QuizParameters quizParameters, CancellationToken cancellationToken)
     {
-        return await _context.Quizzes
+        IQueryable<Quiz> quizQuery = _context
+            .Quizzes
+            .Search(quizParameters.SearchTerm)
+            .Sort(quizParameters.OrderBy);
+
+        var quizResponseQuery = quizQuery
             .Select(q => new QuizNameDTO
             {
                 Id = q.Id,
                 Name = q.Name
-            })
-            .ToListAsync(cancellationToken);
+            });
+
+        var quizzes = await PagedList<QuizNameDTO>.CreateAsync(quizResponseQuery, quizParameters.PageNumber, quizParameters.PageSize);
+
+        return quizzes;
     }
 
     public async Task<QuizWithQuestionsDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken)
