@@ -1,4 +1,5 @@
 ﻿using Application.Behaviors;
+using AspNetCoreRateLimit;
 using Contracts;
 using FluentValidation;
 using LoggerService;
@@ -65,6 +66,38 @@ public static class DependencyInjection
     public static IServiceCollection AddMiddlewares(this IServiceCollection services)
     {
         services.AddTransient<GlobalExceptionHandlerMiddleware>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddRateLimiting(this IServiceCollection services)
+    {
+        var rateLimitRules = new List<RateLimitRule>
+        {
+            new RateLimitRule
+            {
+                Endpoint = "*",
+                Limit = 100,
+                Period = "1m"
+            }
+        };
+
+        services.Configure<IpRateLimitOptions>(opt =>
+        {
+            opt.GeneralRules = rateLimitRules;
+        });
+
+        services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+        services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddCaching(this IServiceCollection services)
+    {
+        services.AddMemoryCache();
 
         return services;
     }
