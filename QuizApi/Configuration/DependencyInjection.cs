@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using QuizApi.Middleware;
+using QuizApi.Presentation;
 using Repository;
 
 namespace QuizApi.Configuration;
@@ -98,6 +99,13 @@ public static class DependencyInjection
     public static IServiceCollection AddCaching(this IServiceCollection services)
     {
         services.AddMemoryCache();
+
+        return services;
+    }
+
+    public static IServiceCollection AddMEF(this IServiceCollection services)
+    {
+        services.AddSingleton<ExporterProvider>();
 
         return services;
     }

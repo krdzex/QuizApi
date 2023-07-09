@@ -4,5 +4,6 @@ namespace Contracts;
 public interface IExporter
 {
     string Format { get; }
-    string ExportAsync(QuizWithQuestionTextDTO quiz);
+    byte[] Export(QuizWithQuestionTextDTO quiz);
+    string ContentType { get; }
 }

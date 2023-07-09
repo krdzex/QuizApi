@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using QuizApi.Presentation.Infrastructure;
 using Shared.DTOs.Quiz;
 using Shared.RequestFeatures;
-using System.Text;
 
 namespace QuizApi.Presentation.Controllers;
 
@@ -19,10 +18,10 @@ public class QuizController : ApiController
 {
     private readonly ExporterProvider _exporterProvider;
 
-    public QuizController(ISender sender)
+    public QuizController(ISender sender, ExporterProvider exporterProvider)
         : base(sender)
     {
-        _exporterProvider = new ExporterProvider();
+        _exporterProvider = exporterProvider;
     }
 
     [HttpGet]
@@ -111,8 +110,8 @@ public class QuizController : ApiController
             return BadRequest("Invalid export format");
         }
 
-        var exportedData = exporter.ExportAsync(result.Value);
+        var exportedData = exporter.Export(result.Value);
 
-        return File(Encoding.UTF8.GetBytes(exportedData), "text/csv", $"{quizId}.csv");
+        return File(exportedData, $"{exporter.ContentType}", $"{quizId}.{exporter.Format}");
     }
 }

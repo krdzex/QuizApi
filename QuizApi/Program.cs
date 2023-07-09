@@ -13,6 +13,7 @@ builder.Services
     .AddPresentation()
     .AddDatabase(builder.Configuration)
     .AddManagers()
+    .AddMEF()
     .AddMiddlewares()
     .AddRateLimiting();
 
