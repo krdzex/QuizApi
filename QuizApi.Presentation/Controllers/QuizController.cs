@@ -76,7 +76,6 @@ public class QuizController : ApiController
     }
 
     [HttpDelete("{quizId}/question/{questionId}")]
-
     public async Task<IActionResult> DeleteQuestionFromQuiz(int quizId, int questionId, CancellationToken cancellationToken)
     {
         var command = new RemoveQuestionFromQuizCommand(quizId, questionId);

@@ -9,5 +9,6 @@ public class QuizConfiguration : IEntityTypeConfiguration<Quiz>
     {
         builder.HasKey(q => q.Id);
         builder.Property(q => q.Name).IsRequired().HasMaxLength(100);
+        builder.Property(q => q.CreatedDate).IsRequired();
     }
 }

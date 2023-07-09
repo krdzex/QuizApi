@@ -18,12 +18,12 @@ public static class RepositoryQuizExtensions
     public static IQueryable<Quiz> Sort(this IQueryable<Quiz> quizzes, string orderByQueryString)
     {
         if (string.IsNullOrWhiteSpace(orderByQueryString))
-            return quizzes.OrderBy(e => e.Name);
+            return quizzes.OrderBy(e => e.CreatedDate);
 
         var orderQuery = OrderQueryBuilder.CreateOrderQuery<Quiz>(orderByQueryString);
 
         if (string.IsNullOrWhiteSpace(orderQuery))
-            return quizzes.OrderBy(e => e.Name);
+            return quizzes.OrderBy(e => e.CreatedDate);
 
         return quizzes.OrderBy(orderQuery);
     }

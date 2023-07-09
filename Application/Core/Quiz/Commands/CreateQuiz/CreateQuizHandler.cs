@@ -18,7 +18,8 @@ internal sealed class CreateQuizHandler : ICommandHandler<CreateQuizCommand>
         var quiz = new Entities.Models.Quiz
         {
             Name = request.QuizCreate.Name,
-            QuizQuestions = new List<QuizQuestion>()
+            QuizQuestions = new List<QuizQuestion>(),
+            CreatedDate = DateTime.UtcNow
         };
 
         foreach (var newQuestion in request.QuizCreate.NewQuestions)
