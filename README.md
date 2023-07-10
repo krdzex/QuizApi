@@ -47,7 +47,8 @@ To create a new data exporter, follow these steps:
    if not exist "$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters" mkdir "$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters"
    xcopy /y "$(TargetDir)*.dll" "$(SolutionDir)QuizApi\bin\$(Configuration)\$(TargetFramework)\exporters\"
 
-5. Open exporter project csproj file and inside `PropertyGroup` add `<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>`
+4. Open exporter project csproj file and inside `PropertyGroup` add `<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>`
+   
    Example:
       ```csharp
      <PropertyGroup>
@@ -56,7 +57,7 @@ To create a new data exporter, follow these steps:
         <Nullable>enable</Nullable>
 	    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
-6.Build your exporter project.
+5.Build your exporter project.
 
 Once these steps are complete, QuizApi can load and use your exporter at runtime without needing to recompile. To verify the availability of your exporter, call the `api/quiz/exporter` endpoint of the QuizApi.
 
