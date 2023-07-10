@@ -4,7 +4,7 @@
 QuizApi is a backend service designed to support a quiz-based frontend application. It allows the creation, retrieval, updating, and deletion of quizzes. Each quiz consists of multiple questions, each having a corresponding answer. Notably, quizzes can share questions, allowing for reusability and efficient data management.
 
 ## Key Features
-1. **Quizzes Retrieval**: Get quizzes with pagination to efficiently manage large quiz collections.
+1. **Quizzes Retrieval**: Retrieve quizzes based on quiz name, with pagination to efficiently manage large question collections.
 2. **Quiz Retrieval**: Get quizz with question.
 3. **Quiz Update**: Change the name of any quiz.
 4. **Quiz Deletion**: Remove quizzes without deleting the associated questions, preserving them for other quizzes.
@@ -57,7 +57,7 @@ To create a new data exporter, follow these steps:
         <Nullable>enable</Nullable>
 	    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
-5.Build your exporter project.
+5. Build your exporter project.
 
 Once these steps are complete, QuizApi can load and use your exporter at runtime without needing to recompile. To verify the availability of your exporter, call the `api/quiz/exporter` endpoint of the QuizApi.
 
