@@ -11,6 +11,8 @@ QuizApi is a backend service designed to support a quiz-based frontend applicati
 5. **Quiz Creation**: Create a new quiz with a name, new questions, and questions taken from existing quizzes.
 6. **Question Update**: Modify content of question.
 7. **Questions Retrieval**: Retrieve questions based on their text, with pagination to efficiently manage large question collections.
+8. **Remove question from quiz**: Remove question from quiz if question exist in that quizz.
+9. **Add question to quiz**: Add question to quiz if question doesn't exist in that quizz.
 
 ## Design Patterns
 The project implements the following design patterns:
