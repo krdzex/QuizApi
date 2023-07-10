@@ -11,6 +11,6 @@ public interface IQuizRepository
     Task<bool> QuizExists(int quizId, CancellationToken cancellation);
     Task<bool> RemoveQuestionFromQuiz(int quizId, int questionId, CancellationToken cancellationToken);
     Task<QuizWithQuestionTextDTO> GetQuizForExport(int quizId, CancellationToken cancellationToken);
-    void Create(Quiz quiz);
+    Task Create(Quiz quiz, CancellationToken cancellationToken);
     void Delete(Quiz quiz);
 }

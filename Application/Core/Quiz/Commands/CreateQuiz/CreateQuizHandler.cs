@@ -42,7 +42,7 @@ internal sealed class CreateQuizHandler : ICommandHandler<CreateQuizCommand>
             quiz.QuizQuestions.Add(new QuizQuestion { QuestionId = existingQuestionId });
         }
 
-        _repository.Quiz.Create(quiz);
+        await _repository.Quiz.Create(quiz, cancellationToken);
 
         return Result.Success();
     }

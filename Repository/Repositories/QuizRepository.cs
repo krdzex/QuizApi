@@ -99,9 +99,9 @@ public class QuizRepository : IQuizRepository
         return quizForExport;
     }
 
-    public void Create(Quiz quiz)
+    public async Task Create(Quiz quiz, CancellationToken cancellationToken)
     {
-        _context.Quizzes.Add(quiz);
+        await _context.Quizzes.AddAsync(quiz, cancellationToken);
     }
 
     public void Delete(Quiz quiz)
