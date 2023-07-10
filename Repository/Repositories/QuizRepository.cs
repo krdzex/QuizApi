@@ -61,26 +61,19 @@ public class QuizRepository : IQuizRepository
         return quiz;
     }
 
-    public async Task<bool> QuizExists(int quizId, CancellationToken cancellationToken)
+    public bool QuestionExistInQuiz(Quiz quiz, int questionId)
     {
-        return await _context.Quizzes.AnyAsync(q => q.Id == quizId, cancellationToken);
+        return quiz.QuizQuestions.Any(q => q.QuestionId == questionId);
     }
 
-    public async Task<bool> RemoveQuestionFromQuiz(int quizId, int questionId, CancellationToken cancellationToken)
+    public QuizQuestion GetQuizQuestion(Quiz quiz, int questionId)
     {
-        var quiz = await _context.Quizzes.Include(q => q.QuizQuestions).SingleOrDefaultAsync(q => q.Id == quizId, cancellationToken);
+        var quizQuestion = quiz.QuizQuestions.FirstOrDefault(q => q.QuestionId == questionId);
 
-        var questionToRemove = quiz.QuizQuestions.FirstOrDefault(q => q.QuestionId == questionId);
-
-        if (questionToRemove == null)
-        {
-            return false;
-        }
-
-        quiz.QuizQuestions.Remove(questionToRemove);
-
-        return true;
+        return quizQuestion;
     }
+
+
 
     public async Task<QuizWithQuestionTextDTO> GetQuizForExport(int quizId, CancellationToken cancellationToken)
     {
@@ -97,6 +90,15 @@ public class QuizRepository : IQuizRepository
             .FirstOrDefaultAsync(cancellationToken);
 
         return quizForExport;
+    }
+
+    public async Task<Quiz> GetQuizByIdWithQuestions(int quizId, CancellationToken cancellationToken)
+    {
+        var quiz = await _context.Quizzes
+            .Include(q => q.QuizQuestions)
+            .SingleOrDefaultAsync(q => q.Id == quizId, cancellationToken);
+
+        return quiz;
     }
 
     public async Task Create(Quiz quiz, CancellationToken cancellationToken)

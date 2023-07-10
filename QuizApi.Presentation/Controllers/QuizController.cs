@@ -1,4 +1,5 @@
-﻿using Application.Core.Quiz.Commands.CreateQuiz;
+﻿using Application.Core.Quiz.Commands.AddQuestionToQuiz;
+using Application.Core.Quiz.Commands.CreateQuiz;
 using Application.Core.Quiz.Commands.DeleteQuiz;
 using Application.Core.Quiz.Commands.RemoveQuestionFromQuiz;
 using Application.Core.Quiz.Commands.UpdateQuizName;
@@ -113,5 +114,15 @@ public class QuizController : ApiController
         var exportedData = exporter.Export(result.Value);
 
         return File(exportedData, $"{exporter.ContentType}", $"{quizId}.{exporter.Format}");
+    }
+
+    [HttpPost("{quizId}/question/{questionId}")]
+    public async Task<IActionResult> AddQuestionToQuiz(int quizId, int questionId, CancellationToken cancellationToken)
+    {
+        var command = new AddQuestionToQuizCommand(quizId, questionId);
+
+        var result = await Sender.Send(command, cancellationToken);
+
+        return result.IsSuccess ? NoContent() : HandleFailure(result);
     }
 }

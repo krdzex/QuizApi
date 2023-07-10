@@ -8,9 +8,10 @@ public interface IQuizRepository
     Task<PagedList<QuizNameDTO>> GetAllQuizNamesAsync(QuizParameters quizParameters, CancellationToken cancellationToken);
     Task<QuizWithQuestionsDTO> GetQuizWithQuestionsAsync(int quizId, CancellationToken cancellationToken);
     Task<Quiz> GetQuizById(int quizId);
-    Task<bool> QuizExists(int quizId, CancellationToken cancellation);
-    Task<bool> RemoveQuestionFromQuiz(int quizId, int questionId, CancellationToken cancellationToken);
+    QuizQuestion GetQuizQuestion(Quiz quiz, int questionId);
     Task<QuizWithQuestionTextDTO> GetQuizForExport(int quizId, CancellationToken cancellationToken);
     Task Create(Quiz quiz, CancellationToken cancellationToken);
     void Delete(Quiz quiz);
+    bool QuestionExistInQuiz(Quiz quiz, int questionId);
+    Task<Quiz> GetQuizByIdWithQuestions(int quizId, CancellationToken cancellationToken);
 }

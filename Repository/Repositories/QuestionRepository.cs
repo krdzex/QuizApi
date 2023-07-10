@@ -1,6 +1,5 @@
 ﻿using Contracts;
 using Entities.Models;
-using Microsoft.EntityFrameworkCore;
 using Repository.Extensions;
 using Shared.DTOs.Question;
 using Shared.RequestFeatures;
@@ -39,10 +38,5 @@ public class QuestionRepository : IQuestionRepository
         var questions = await PagedList<QuestionDTO>.CreateAsync(questionResponseQuery, questionParameters.PageNumber, questionParameters.PageSize);
 
         return questions;
-    }
-
-    public async Task<bool> QuestionExists(int questionId, CancellationToken cancellationToken)
-    {
-        return await _context.Questions.AnyAsync(q => q.Id == questionId, cancellationToken);
     }
 }

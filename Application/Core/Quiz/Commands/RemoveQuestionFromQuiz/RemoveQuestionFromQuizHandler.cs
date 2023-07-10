@@ -14,26 +14,21 @@ internal sealed class RemoveQuestionFromQuizHandler : ICommandHandler<RemoveQues
 
     public async Task<Result> Handle(RemoveQuestionFromQuizCommand request, CancellationToken cancellationToken)
     {
-        var quizExist = await _repository.Quiz.QuizExists(request.QuizId, cancellationToken);
+        var quiz = await _repository.Quiz.GetQuizByIdWithQuestions(request.QuizId, cancellationToken);
 
-        if (!quizExist)
+        if (quiz is null)
         {
             return Result.NotFound($"Quiz with id '{request.QuizId}' not found.");
         }
 
-        var questionExist = await _repository.Question.QuestionExists(request.QuestionId, cancellationToken);
+        var quizQuestion = _repository.Quiz.GetQuizQuestion(quiz, request.QuestionId);
 
-        if (!questionExist)
+        if (quizQuestion is null)
         {
-            return Result.NotFound($"Question with id '{request.QuestionId}' not found.");
+            return Result.BadRequest("Failed to remove question. Please ensure the question exists in the quiz.");
         }
 
-        var removeResult = await _repository.Quiz.RemoveQuestionFromQuiz(request.QuizId, request.QuestionId, cancellationToken);
-
-        if (!removeResult)
-        {
-            return Result.BadRequest($"Remove question from quiz is not successfully done. Chack that question exist in quiz in order to remove it");
-        }
+        quiz.QuizQuestions.Remove(quizQuestion);
 
         return Result.Success();
     }

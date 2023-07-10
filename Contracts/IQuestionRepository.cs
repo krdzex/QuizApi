@@ -7,5 +7,4 @@ public interface IQuestionRepository
 {
     Task<Question> GetQuestionById(int questionId);
     Task<PagedList<QuestionDTO>> GetQuestions(QuestionParameters questionParameters, CancellationToken cancellationToken);
-    Task<bool> QuestionExists(int questionId, CancellationToken cancellationToken);
 }
