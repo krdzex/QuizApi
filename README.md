@@ -4,7 +4,7 @@
 QuizApi is a backend service designed to support a quiz-based frontend application. It allows the creation, retrieval, updating, and deletion of quizzes. Each quiz consists of multiple questions, each having a corresponding answer. Notably, quizzes can share questions, allowing for reusability and efficient data management.
 
 ## Key Features
-1. **Quizzes Retrieval**: Get quizzes with pagination to efficiently manage large quiz collections.
+1. **Quizzes Retrieval**: Retrieve quizzes based on quiz name, with pagination to efficiently manage large question collections.
 2. **Quiz Retrieval**: Get quizz with question.
 3. **Quiz Update**: Change the name of any quiz.
 4. **Quiz Deletion**: Remove quizzes without deleting the associated questions, preserving them for other quizzes.
