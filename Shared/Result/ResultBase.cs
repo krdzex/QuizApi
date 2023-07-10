@@ -24,10 +24,4 @@ public abstract class ResultBase
     public ErrorMessage? ErrorMessage { get; }
 
     public ErrorDetail[]? Errors { get; }
-
-    public string GetErrorSummary()
-    {
-        return ErrorMessage?.Message
-               ?? string.Join(Environment.NewLine, Errors!.Select(ed => $"{ed.Code}: {ed.Message}"));
-    }
 }

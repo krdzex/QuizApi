@@ -15,11 +15,7 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
-        services.AddControllers(config =>
-        {
-            config.RespectBrowserAcceptHeader = true;
-            config.ReturnHttpNotAcceptable = true;
-        }).AddXmlDataContractSerializerFormatters()
+        services.AddControllers()
           .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 
         services.AddSwaggerGen(s =>
